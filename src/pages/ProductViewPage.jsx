@@ -26,6 +26,10 @@ function ProductViewPage() {
     return (
         <div>
             <ViewProductDetails productInfo={productInfo} />
+            <div className="px-3">
+                <h3 className="text-lg from-stone-700 font-semibold">Description -</h3>
+                <p>{productInfo.description}</p>
+            </div>
         </div>
     )
 }
