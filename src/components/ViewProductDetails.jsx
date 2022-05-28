@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ViewProductDetails(props) {
   return (
@@ -79,9 +80,9 @@ function ViewProductDetails(props) {
             <p className="text-green-600 font-light text-lg mt-4">
               Rs.{props.productInfo.price}
             </p>
-            <button className="w-[50vw] md:w-[10vw] my-2 bg-yellow-400 p-2 rounded-md font-medium">
+            <Link to={"../checkout/" + props.productId} className="w-[50vw] md:w-[10vw] my-2 bg-yellow-400 p-2 rounded-md font-medium">
               Buy now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
