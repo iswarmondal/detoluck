@@ -1,18 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function AdminDashboardNavigation() {
   return (
     <>
-      <nav className="border-2 w-1/12 flex-grow-0">
-        <h4 className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
+      <nav className="border-2 flex flex-col w-1/12 flex-grow-0">
+        <Link to={"orders"} className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
           Orders
-        </h4>
-        <h4 className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
+        </Link>
+        <Link to={"payments"} className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
           Payments
-        </h4>
-        <h4 className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
+        </Link>
+        <Link to={"Payouts"} className="font-medium text-base cursor-pointer my-1 bg-slate-300 p-1 hover:bg-slate-200">
           Payout
-        </h4>
+        </Link>
       </nav>
     </>
   );

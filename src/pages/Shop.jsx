@@ -1,8 +1,12 @@
+import {app} from '../firebase'
+import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SingleProductBox from '../components/SingleProductBox';
-const axios = require('axios').default;
+// const axios = require('axios').default;
 
+const db = getFirestore(app);
+const col = collection(db, 'products');
 
 function Shop() {
     const [products, setProducts] = useState([]);
@@ -10,8 +14,11 @@ function Shop() {
     // Fetch products from API
     const getProducts = async () => {
         try {
-            const products = await axios.get('https://fakestoreapi.com/products');
-            setProducts(products.data);
+            const productDocs = await getDocs(col);
+            const productsArray = [];
+            productDocs.docs.forEach(doc => productsArray.push({id: doc.id, ...doc.data()}));
+            setProducts(productsArray);
+            console.log(productsArray[1]);
         } catch (error) {
             console.log(error);
         }
@@ -27,8 +34,8 @@ function Shop() {
         {/* Shop items */}
             <div className="flex flex-wrap justify-center items-center">
                 {
-                    products?.map(product => (
-                        <Link to={"product/" + product.id} key={product.id}>
+                    products?.map((product, idx) => (
+                        <Link to={"product/" + product.id} key={idx}>
                             <SingleProductBox product={product} />
                         </Link>
                     ))
