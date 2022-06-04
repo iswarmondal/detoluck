@@ -6,9 +6,11 @@ import AdminLogin from "./pages/AdminLogin";
 import Checkout from "./pages/Checkout";
 import ProductViewPage from "./pages/ProductViewPage";
 import Shop from './pages/Shop';
+import { ProductProvider } from "./state/ProductProvider";
 
 function App() {
   return (
+    <ProductProvider>
     <main className="overflow-x-hidden">
       <TopNavbar />
       <Routes>
@@ -19,6 +21,7 @@ function App() {
         <Route path="/login" element={<AdminLogin />} />
       </Routes>
     </main>
+    </ProductProvider>
   );
 }
 
