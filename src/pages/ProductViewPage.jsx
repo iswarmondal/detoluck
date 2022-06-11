@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import ViewProductDetails from "../components/ViewProductDetails";
+import {ProductContext} from '../state/ProductProvider'
 
 function ProductViewPage() {
   const [productInfo, setproductInfo] = useState({});
 
   let params = useParams();
+  let productId = params.productId;
+
+  const productState = useContext(ProductContext)
+  const productList = productState[0]
 
   useEffect(() => {
-    const getProductInfo = async () => {
-      try {
-        const data = await axios.get(
-          `https://fakestoreapi.com/products/${params.productId}`
-        );
-
-        setproductInfo(data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProductInfo();
-  }, [params.productId]);
+    let thisProduct = productList.find((e)=>e.id===productId);
+    if(thisProduct)
+      setproductInfo(thisProduct)
+  }, [productList]);
 
   return (
     <div>
