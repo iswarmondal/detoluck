@@ -1,69 +1,57 @@
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from "react-router";
+import CheckoutForm from "../components/CheckoutForm";
+import CheckoutSidepannel from "../components/CheckoutSidepannel";
+import { app } from '../firebase';
+import { doc, getDoc, getFirestore, } from "firebase/firestore";
 
 function Checkout() {
   const productId = useParams();
+  const [product, setProduct] = useState(null);
+  const [productPrice, setProductPrice] = useState(null);
+  const [fullName, setFullName] = useState("")
+  const [phone, setPhone] = useState()
+  const [city, setCity] = useState()
+  const [locality, setLocality] = useState()
+  const [nearbyLandmark, setNearbyLandmark] = useState()
+  const [pinCode, setPinCode] = useState()
+  const [introducerPhone, setIntroducerPhone] = useState()
+  const [howDidYouKnowUs, setHowDidYouKnowUs] = useState()
+  const [paymentMethod, setPaymentMethod] = useState("")
+
+  const fetchDoc = async () => {
+    try {
+      const db = getFirestore(app);
+      const docRef = doc(db, "products", productId.productId);
+      const productDoc = await getDoc(docRef);
+      if (productDoc.exists()) {
+        const productData = productDoc.data();
+        setProduct(productData);
+        setProductPrice(productData.price);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchDoc();
+  }, [])
+
+
+  console.log(`the payment method is ${paymentMethod}`)
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-lg font-semibold m-3">Checkout</h1>
-      <div className="form flex flex-col items-center border-2 p-3 w-screen md:w-3/4">
-        <div className="w-4/5 flex flex-col">
-            <label>Full name</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>Phone number</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>City / Village</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>Locality</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>Nearby landmark</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>PIN code</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>Introducer Phone Number</label>
-            <input
-            type="text"
-            className="w-full h-8 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
-        </div>
-        <div className="w-4/5 flex flex-col">
-            <label>How did you get to know us? (Optional)</label>
-            <input
-            type="text"
-            className="w-full h-16 border border-slate-500 rounded-md mb-2 shadow-md px-2"
-            />
+    <>
+      <div className="flex flex-col items-center justify-evenly min-w-full">
+        <h1 className="text-lg font-semibold m-3">Checkout</h1>
+        <div className="flex w-screen">
+          <CheckoutForm setCity setFullName setHowDidYouKnowUs setIntroducerPhone setLocality setNearbyLandmark setPhone setPinCode />
+          <CheckoutSidepannel setPaymentMethod={setPaymentMethod}>{productPrice? productPrice: "Loading..."}</CheckoutSidepannel>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
