@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function AdminProducts() {
     return (
@@ -8,7 +8,7 @@ function AdminProducts() {
                 <h1 className='font-semibold text-xl'>All Products</h1>
                 <div className="my-3 w-full px-4 flex justify-evenly">
                     <Link to="add-new-product">
-                        <button className='border-md p-2 rounded-md bg-green-500 text-white hover:bg-green-600'>
+                        <button className='border-md p-2 rounded-md bg-green-300 text-white hover:bg-green-400'>
                             New Product
                         </button>
                     </Link>
